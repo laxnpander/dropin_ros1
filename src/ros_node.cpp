@@ -21,6 +21,12 @@ RosNode::RosNode(
     {
       case TopicType::IMAGE:
       {
+        subs_[topic.name] = nh_.subscribe<sensor_msgs::Image>(
+            topic.name,
+            100,
+            [this](const sensor_msgs::ImageConstPtr &msg){
+              this->subImage(*msg);
+            });
         break;
       }
       default:
@@ -34,6 +40,23 @@ RosNode::RosNode(
 bool RosNode::isOkay() const
 {
   return nh_.ok();
+}
+
+void RosNode::subImage(
+    const sensor_msgs::Image &msg)
+{
+}
+
+void RosNode::subImu(
+    const sensor_msgs::Imu &msg)
+{
+
+}
+
+void RosNode::subGnss(
+    const sensor_msgs::NavSatFix &msg)
+{
+
 }
 
 cv_bridge::CvImage RosNode::toRos(const std_msgs::Header &header, const cv::Mat &cv_img)
